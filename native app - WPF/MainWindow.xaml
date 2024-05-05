@@ -1,0 +1,31 @@
+﻿<Window x:Class="SampleApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleApplication"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        mc:Ignorable="d" Loaded="Window_Loaded"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        
+        
+        <!--search bar panel-->
+        <Grid Grid.Column="0" HorizontalAlignment="Center">
+            <StackPanel Orientation="Vertical">
+                <Label Content="Country :" FontSize="15" FontWeight="DemiBold" Margin="0,2"/>
+                <TextBox x:Name="TxtCountryName" Width="300" HorizontalAlignment="Left" FontSize="15" Margin="2" TextChanged="TxtCountryName_TextChanged" />
+                <Button x:Name="BtnSearch" Width="100" Content="Search" Margin="5" Click="BtnSearch_Click"/>
+            </StackPanel>
+        </Grid>
+
+        <!--web view-->
+        <wv2:WebView2 Name="webView" Grid.Column="1" Margin="2"/>
+
+
+    </Grid>
+</Window>
