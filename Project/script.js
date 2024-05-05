@@ -1,57 +1,71 @@
 // UI widgets
+// Get references to the input field for country name and the search button
 let countryName = document.getElementById("txt-country-input");
 let searchButton = document.getElementById("btn-search");
 
-//button click events
+// Add event listener to the search button to handle click events
 searchButton.addEventListener('click', async () => {
+    // Trim any whitespace from the input value and retrieve the country name
     const country = countryName.value.trim();
-    await getTime(country);
+    // Call the function to fetch data for the entered country
+    await getCountryData(country);
 });
 
-async function getTime(country) {
+// Function to fetch data for a specific country
+async function getCountryData(country) {
+    // Construct the URL for the API request using the provided country name
     const url = `https://country55.p.rapidapi.com/api/countries?country=${country}`;
+    // Set up options for the fetch request, including headers with API key and host
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '0c06a1d5f4msh34989841bd400e4p17152ajsn7f186dad8ecc',
-            'X-RapidAPI-Host': 'country55.p.rapidapi.com'
+            'X-RapidAPI-Key': '', // Replace with your own API key
+            'X-RapidAPI-Host': '' // Replace with your own API host
         }
     };
 
     try {
+        // Fetch data from the API using the constructed URL and options
         const response = await fetch(url, options);
-        const result = await response.json(); // Parse JSON directly to object
+        // Parse the JSON response into a JavaScript object
+        const result = await response.json();
 
-        // Accessing specific values from the JSON object
+        // Extract specific data from the response object
         const countryCode = result.cca3;
         const capitalCity = result.capital[0];
         const population = result.population;
+
+        // Log the extracted data to the console
         console.log('Country Code:', countryCode);
         console.log('Capital City:', capitalCity);
-        console.log('population:', population);
+        console.log('Population:', population);
 
-        //send message to webview
-        window.chrome.webview.postMessage(`population:${population}`);
+        // Send a message to the web view with population information
+        window.chrome.webview.postMessage(`Population: ${population}`);
 
+        // Retrieve the URL for the flag image from the response
         const flagUrl = result.flags.png;
-        console.log("link", flagUrl);
+        console.log("Flag Image URL:", flagUrl);
 
-        const image = new Image(); // Create new image element
-        image.crossOrigin = "Anonymous"; // Enable CORS for the image
-        // image.onload = async function() {
-        //     const base64String = await getBase64Image(image);
-        //     console.log(base64String);
-        // };
+        // Create a new image element
+        const image = new Image();
+        // Enable CORS for the image to avoid security errors
+        image.crossOrigin = "Anonymous";
+        // Set the image source and alternative text
         image.src = flagUrl;
-        image.alt = 'Flag Image'; 
+        image.alt = 'Flag Image';
+
+        // Retrieve the container element to display the flag image
         const container = document.getElementById('flag-container');
+        // Append the image to the container
         container.appendChild(image);
     } catch (error) {
+        // Log any errors that occur during the process
         console.error(error);
     }
 }
 
-
+// Function to convert an image to a base64 encoded string
 function getBase64Image(img) {
     return new Promise((resolve, reject) => {
         const canvas = document.createElement('canvas');
