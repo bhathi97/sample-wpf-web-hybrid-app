@@ -9,5 +9,5 @@ This repository contains the code for a WPF-Web hybrid application, as discussed
 3. Subscribe to the free plan.
 4. Explore the available endpoints to find the integrated API codes.
 
-![Image of ](image_url)
+![Image of ]([image_url](https://github.com/bhathi97/sample-wpf-web-hybrid-app/blob/main/image-dashboard.png))
 
